@@ -12,9 +12,9 @@ function App() {
   // random pick between 0 and 3 to determine the RGB code that will be the answer, store in answer state
   const getRGB = () => {
     const pickColor = () => {
-      let red = Math.floor((Math.random() * 255));
-      let green = Math.floor((Math.random() * 255));
-      let blue = Math.floor((Math.random() * 255));
+      let red = Math.floor((Math.random() * 256));
+      let green = Math.floor((Math.random() * 256));
+      let blue = Math.floor((Math.random() * 256));
       return `rgb(${red}, ${green}, ${blue})`
     };
 
@@ -28,6 +28,11 @@ function App() {
     let answerIndex = Math.floor((Math.random() * 4));
     setAnswer(answerIndex);
   };
+
+  const handleClick = () => {
+    
+
+  }
 
   const playAgain = () => {
     getRGB();
@@ -56,18 +61,23 @@ function App() {
 
       {/* 4 color choices displayed in a 2x2 grid */}
       <div className='container'>
-        <div className='box' style={{backgroundColor: `${rgb[0]}`}}>Box 1</div>
-        <div className='box' style={{backgroundColor: `${rgb[1]}`}}>Box 2</div>
+        <div className='box' style={{backgroundColor: `${rgb[0]}`}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[1]}`}}></div>
       </div>
       <div className='container'>
-        <div className='box' style={{backgroundColor: `${rgb[2]}`}}>Box 3</div>
-        <div className='box' style={{backgroundColor: `${rgb[3]}`}}>Box 4</div>
+        <div className='box' style={{backgroundColor: `${rgb[2]}`}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[3]}`}}></div>
       </div>
       {/* after selecting the answer the right one will stay but the other will become translucent */}
 
       {/* win/loss counter (not visible) */}
+      <div>
+        <p>Wins: {score.wins}</p>
+        <p>Losses: {score.losses}</p>
+      </div>
       {/* shows the score after 10 turns and shows a play "again button" */}
-      
+      <button onClick={playAgain}>Play Again</button>
+
 
       {/* link to github */}
       <p className='githubLink'>See this project on&nbsp;<a href='https://github.com/kawaiimusician/color-guessing-game' target='_blank'>Github</a>!</p>
