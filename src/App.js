@@ -6,7 +6,8 @@ function App() {
   const [rgb, setRgb] = useState({});
   const [answer, setAnswer] = useState([]);
   // const [counter, setCounter] = useState(0)
-  const [score, setScore] = useState();
+  const [score, setScore] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   // rgb picker function - picks 3 random numbers between 0 and 255. stores in state. (does it 4 times.)
   // random pick between 0 and 3 to determine the RGB code that will be the answer, store in answer state
@@ -22,19 +23,53 @@ function App() {
 
     setRgb(rgbValues);
 
-  }
+  };
 
   const pickAnswer = () => {
     let answerIndex = Math.floor((Math.random() * 4));
     setAnswer(answerIndex);
   };
 
-  const handleClick = () => {
-    
+  const grayOut = (rgbCode) => {
+    let gray = ['rgb(140, 140, 140)', 'rgb(140, 140, 140)', 'rgb(140, 140, 140)', 'rgb(140, 140, 140)'];
+    gray[answer] = rgbCode;
+    setRgb(gray);
+  }
 
+  const handleClick = (rgbBoxCode) => {
+    if (disabled == false) {
+      setDisabled(true)
+      console.log(rgbBoxCode)
+      if (rgbBoxCode == rgb[answer]) {
+        console.log("Correct!")
+        let newScore = { ...score };
+        newScore.wins++;
+        setScore(newScore);
+        grayOut(rgbBoxCode);
+        setTimeout(()=> {
+          getRGB();
+          pickAnswer();
+          setDisabled(false);
+        },2000)
+      } else {
+        console.log("Nope.")
+        let newScore = { ...score };
+        newScore.losses++;
+        setScore(newScore);
+        grayOut(rgbBoxCode);
+        setTimeout(()=> {
+          getRGB();
+          pickAnswer();
+          setDisabled(false);
+        },2000)
+      }
+    } else {
+      console.log("Disabled")
+    }
   }
 
   const playAgain = () => {
+    setDisabled(false);
     getRGB();
     pickAnswer();
     setScore({ 'wins': 0, 'losses': 0 });
@@ -48,6 +83,7 @@ function App() {
   
   console.log(rgb);
   console.log(answer);
+  console.log(score);
 
 
 
@@ -61,12 +97,12 @@ function App() {
 
       {/* 4 color choices displayed in a 2x2 grid */}
       <div className='container'>
-        <div className='box' style={{backgroundColor: `${rgb[0]}`}}></div>
-        <div className='box' style={{backgroundColor: `${rgb[1]}`}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[0]}`}} onClick={()=>{{handleClick(`${rgb[0]}`)}}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[1]}`}} onClick={()=>{handleClick(`${rgb[1]}`)}}></div>
       </div>
       <div className='container'>
-        <div className='box' style={{backgroundColor: `${rgb[2]}`}}></div>
-        <div className='box' style={{backgroundColor: `${rgb[3]}`}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[2]}`}} onClick={()=>{handleClick(`${rgb[2]}`)}}></div>
+        <div className='box' style={{backgroundColor: `${rgb[3]}`}} onClick={()=>{handleClick(`${rgb[3]}`)}}></div>
       </div>
       {/* after selecting the answer the right one will stay but the other will become translucent */}
 
@@ -77,7 +113,6 @@ function App() {
       </div>
       {/* shows the score after 10 turns and shows a play "again button" */}
       <button onClick={playAgain}>Play Again</button>
-
 
       {/* link to github */}
       <p className='githubLink'>See this project on&nbsp;<a href='https://github.com/kawaiimusician/color-guessing-game' target='_blank'>Github</a>!</p>
