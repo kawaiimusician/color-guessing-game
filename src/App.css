@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.githubLink {
+  display: flex;
+  justify-content: end;
+  font-size: 15px;
+  padding-right: 20px;
+}
