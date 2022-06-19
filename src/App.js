@@ -30,9 +30,9 @@ function App() {
     setAnswer(answerIndex);
   };
 
-  const grayOut = (rgbCode) => {
+  const grayOut = () => {
     let gray = ['rgb(140, 140, 140)', 'rgb(140, 140, 140)', 'rgb(140, 140, 140)', 'rgb(140, 140, 140)'];
-    gray[answer] = rgbCode;
+    gray[answer] = rgb[answer];
     setRgb(gray);
   }
 
@@ -45,7 +45,7 @@ function App() {
         let newScore = { ...score };
         newScore.wins++;
         setScore(newScore);
-        grayOut(rgbBoxCode);
+        grayOut();
         setTimeout(()=> {
           getRGB();
           pickAnswer();
@@ -56,7 +56,7 @@ function App() {
         let newScore = { ...score };
         newScore.losses++;
         setScore(newScore);
-        grayOut(rgbBoxCode);
+        grayOut();
         setTimeout(()=> {
           getRGB();
           pickAnswer();
@@ -85,8 +85,6 @@ function App() {
   console.log(answer);
   console.log(score);
 
-
-
   return (
     <div className="App">
       <h1>Guess the Color</h1>
@@ -112,7 +110,7 @@ function App() {
         <p>Losses: {score.losses}</p>
       </div>
       {/* shows the score after 10 turns and shows a play "again button" */}
-      <button onClick={playAgain}>Play Again</button>
+      <button onClick={playAgain}>New Game</button>
 
       {/* link to github */}
       <p className='githubLink'>See this project on&nbsp;<a href='https://github.com/kawaiimusician/color-guessing-game' target='_blank'>Github</a>!</p>
